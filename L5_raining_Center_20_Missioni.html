@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Math-ISS Training Center - 20 Missioni</title>
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d1b4e 100%);
+            color: #e0e6ed;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Stelle animate nello sfondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid #3b82f6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header con astronauta animato */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #f59e0b;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #60a5fa, #a78bfa, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+            margin-bottom: 15px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.3); }
+        }
+        
+        .astronaut-float {
+            font-size: 3em;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .mission-counter {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .counter-box {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 2px solid #60a5fa;
+            box-shadow: 0 5px 20px rgba(96, 165, 250, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .counter-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+        
+        .counter-label {
+            font-size: 0.9em;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        
+        /* Filtri categoria */
+        .filter-section {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 2px solid #475569;
+        }
+        
+        .filter-section h3 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            color: white;
+            border: 2px solid #60a5fa;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(96, 165, 250, 0.4);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #fbbf24;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+        }
+        
+        .filter-btn::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .filter-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Card esercizio con effetti */
+        .exercise-card {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exercise-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .exercise-card:hover::before {
+            left: 100%;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .exercise-card.completed {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%);
+        }
+        
+        .exercise-card.completed::after {
+            content: "✓";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3em;
+            color: #10b981;
+            animation: checkmark 0.5s ease;
+        }
+        
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+        
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .exercise-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .badge-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .difficulty-badge {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .easy { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+        }
+        .medium { 
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
+        }
+        .hard { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.3);
+        }
+        
+        .type-badge {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+        
+        .character-badge {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(139, 92, 246, 0.3);
+        }
+        
+        .exercise-context {
+            background: rgba(59, 130, 246, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+            font-size: 1.05em;
+        }
+        
+        .exercise-context strong {
+            color: #60a5fa;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .math-expression {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid #3b82f6;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Pulsante soluzione con animazione rocket */
+        .solution-toggle {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 25px auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+        }
+        
+        .solution-toggle:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+        }
+        
+        .solution-toggle:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .solution-toggle .rocket {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .solution-toggle:hover .rocket {
+            animation: rocketLaunch 0.6s ease;
+        }
+        
+        @keyframes rocketLaunch {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .solution-toggle::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .solution-toggle:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Contenuto soluzione con animazione slide */
+        .solution-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+        
+        .solution-content.visible {
+            max-height: 3000px;
+            opacity: 1;
+            margin-top: 25px;
+            animation: slideDown 0.5s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #10b981;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .solution-step {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #34d399;
+            position: relative;
+        }
+        
+        .solution-step h4 {
+            color: #6ee7b7;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.4);
+        }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.15);
+            border: 2px solid #ef4444;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #fca5a5;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .success-box {
+            background: rgba(16, 185, 129, 0.15);
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .success-box h4 {
+            color: #6ee7b7;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .hint-box {
+            background: rgba(251, 191, 36, 0.15);
+            border-left: 4px solid #fbbf24;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        
+        .hint-box strong {
+            color: #fcd34d;
+        }
+        
+        /* Progress bar animata */
+        .progress-section {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 2px solid #475569;
+        }
+        
+        .progress-section h3 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        
+        .progress-bar-container {
+            background: rgba(15, 23, 42, 0.5);
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #3b82f6;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.2em;
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .exercise-header { flex-direction: column; align-items: flex-start; }
+            .filter-buttons { flex-direction: column; }
+            .mission-counter { flex-direction: column; }
+        }
+        
+        /* Print styles */
+        @media print {
+            body { background: white; color: black; }
+            .stars, .particle { display: none; }
+            .solution-content { max-height: none !important; opacity: 1 !important; display: block !important; }
+            .solution-toggle { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stelle animate -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="astronaut-float">🚀</div>
+            <h1>MATH-ISS TRAINING CENTER</h1>
+            <p style="font-size: 1.3em; color: #94a3b8; margin-top: 10px;">
+                Centro di Addestramento Equazioni Fratte
+            </p>
+            <p style="font-size: 1em; color: #64748b; margin-top: 5px;">
+                Anno Stellare 2157 | Pianeta Algebrion
+            </p>
+        </div>
+
+        <!-- Contatori missione -->
+        <div class="mission-counter">
+            <div class="counter-box">
+                <div class="counter-number" id="totalExercises">20</div>
+                <div class="counter-label">Missioni Totali</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="completedExercises">0</div>
+                <div class="counter-label">Completate</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="remainingExercises">20</div>
+                <div class="counter-label">Rimanenti</div>
+            </div>
+        </div>
+
+        <!-- Barra progresso -->
+        <div class="progress-section">
+            <h3>🎯 PROGRESSO ADDESTRAMENTO</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% Completato</div>
+        </div>
+
+        <!-- Filtri -->
+        <div class="filter-section">
+            <h3>🔍 FILTRA MISSIONI PER CATEGORIA</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterExercises('all')">🌟 Tutte (20)</button>
+                <button class="filter-btn" onclick="filterExercises('easy')">⭐ Facili (7)</button>
+                <button class="filter-btn" onclick="filterExercises('medium')">⭐⭐ Medie (7)</button>
+                <button class="filter-btn" onclick="filterExercises('hard')">⭐⭐⭐ Difficili (6)</button>
+                <button class="filter-btn" onclick="filterExercises('equation')">📐 Equazioni (14)</button>
+                <button class="filter-btn" onclick="filterExercises('problem')">📝 Problemi (6)</button>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 1 -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 1</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🤖 AI-Calc</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔧 Sistema di Base - Test Iniziale</strong>
+                AI-Calc ti assegna la prima missione di calibrazione. Devi trovare il valore che azzera il sensore.
+            </div>
+            <div class="math-expression">
+                \[\frac{2}{x+5} = 0\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(1)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-1">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 Condizioni di Esistenza (C.E.)</h4>
+                        <p>Il denominatore deve essere diverso da zero:</p>
+                        <div class="math-expression">
+                            \[x + 5 \neq 0 \quad \Rightarrow \quad x \neq -5\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔍 Quando una frazione è uguale a zero?</h4>
+                        <p>Una frazione è uguale a zero <strong>se e solo se il numeratore è zero</strong> (e il denominatore è diverso da zero).</p>
+                        <div class="math-expression">
+                            \[\frac{2}{x+5} = 0 \quad \Rightarrow \quad 2 = 0\]
+                        </div>
+                        <p style="margin-top: 15px;">Ma 2 = 0 è <strong>FALSO</strong>! Il numeratore non può mai essere zero.</p>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ ATTENZIONE!</h4>
+                        <p>L'equazione è <strong>IMPOSSIBILE</strong> perché non esistono valori di \(x\) che rendono vera l'equazione.</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE FINALE</h4>
+                        <p style="font-size: 1.2em; font-weight: bold;">L'equazione non ha soluzioni (impossibile)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 2 -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 2</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">⚙️ Engineer Beta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>📡 Calibrazione Antenna</strong>
+                Engineer Beta necessita di calibrare l'antenna di comunicazione. Il parametro deve soddisfare questa equazione.
+            </div>
+            <div class="math-expression">
+                \[\frac{6x}{x^2-6x} = 0\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(2)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-2">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione del denominatore</h4>
+                        <div class="math-expression">
+                            \[x^2 - 6x = x(x - 6)\]
+                        </div>
+                        <p>Quindi l'equazione diventa:</p>
+                        <div class="math-expression">
+                            \[\frac{6x}{x(x-6)} = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x(x-6) \neq 0 \quad \Rightarrow \quad x \neq 0 \land x \neq 6\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🎯 Risoluzione</h4>
+                        <p>Per avere una frazione = 0, il numeratore deve essere zero:</p>
+                        <div class="math-expression">
+                            \[6x = 0 \quad \Rightarrow \quad x = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ VERIFICA C.E.!</h4>
+                        <p>La soluzione trovata è \(x = 0\), ma nelle C.E. abbiamo \(x \neq 0\)!</p>
+                        <p>Quindi \(x = 0\) <strong>NON è accettabile</strong>.</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE FINALE</h4>
+                        <p style="font-size: 1.2em; font-weight: bold;">L'equazione è IMPOSSIBILE (la soluzione non rispetta le C.E.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 3 -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 3</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🌡️ Sensore Temperatura</strong>
+                Il sensore di temperatura necessita di un valore specifico per funzionare correttamente.
+            </div>
+            <div class="math-expression">
+                \[\frac{1}{x} - \frac{2}{3x} = \frac{7}{3x}\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(3)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-3">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x \neq 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Calcolo m.c.m. e riduzione</h4>
+                        <p>Il m.c.m. dei denominatori è \(3x\). Moltiplichiamo tutto per \(3x\):</p>
+                        <div class="math-expression">
+                            \[3x \cdot \frac{1}{x} - 3x \cdot \frac{2}{3x} = 3x \cdot \frac{7}{3x}\]
+                        </div>
+                        <div class="math-expression">
+                            \[3 - 2 = 7\]
+                        </div>
+                        <div class="math-expression">
+                            \[1 = 7\]
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ EQUAZIONE FALSA!</h4>
+                        <p>L'uguaglianza \(1 = 7\) è <strong>sempre falsa</strong>, qualunque sia il valore di \(x\).</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE FINALE</h4>
+                        <p style="font-size: 1.2em; font-weight: bold;">L'equazione è IMPOSSIBILE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 4 -->
+        <div class="exercise-card" data-difficulty="medium" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 4</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🎖️ Commander Sigma</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>⚡ Generatore Principale</strong>
+                Commander Sigma ti affida una missione critica: trovare il parametro ottimale per il generatore principale.
+            </div>
+            <div class="math-expression">
+                \[\frac{x-1}{3} - \frac{2}{x} = \frac{7}{3x}\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento di AI-Calc:</strong> Il m.c.m. dei denominatori è \(3x\).
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(4)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-4">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x \neq 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Moltiplicazione per m.c.m. = 3x</h4>
+                        <div class="math-expression">
+                            \[3x \cdot \frac{x-1}{3} - 3x \cdot \frac{2}{x} = 3x \cdot \frac{7}{3x}\]
+                        </div>
+                        <div class="math-expression">
+                            \[x(x-1) - 6 = 7\]
+                        </div>
+                        <div class="math-expression">
+                            \[x^2 - x - 6 = 7\]
+                        </div>
+                        <div class="math-expression">
+                            \[x^2 - x - 13 = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Formula risolutiva</h4>
+                        <div class="math-expression">
+                            \[x = \frac{1 \pm \sqrt{1 + 52}}{2} = \frac{1 \pm \sqrt{53}}{2}\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE FINALE</h4>
+                        <p style="font-size: 1.2em;">Le soluzioni sono:</p>
+                        <div class="math-expression">
+                            \[x_1 = \frac{1 + \sqrt{53}}{2} \quad , \quad x_2 = \frac{1 - \sqrt{53}}{2}\]
+                        </div>
+                        <p style="margin-top: 15px;">Entrambe rispettano le C.E. (\(x \neq 0\)) quindi sono <strong>accettabili</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 5 -->
+        <div class="exercise-card" data-difficulty="medium" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 5</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">⚙️ Engineer Beta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>💧 Sistema Idraulico</strong>
+                Le pompe del sistema idraulico devono essere sincronizzate. Trova il parametro corretto.
+            </div>
+            <div class="math-expression">
+                \[\frac{3x-2}{x+4} = 5\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(5)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-5">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x + 4 \neq 0 \quad \Rightarrow \quad x \neq -4\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Moltiplicazione per (x+4)</h4>
+                        <div class="math-expression">
+                            \[3x - 2 = 5(x + 4)\]
+                        </div>
+                        <div class="math-expression">
+                            \[3x - 2 = 5x + 20\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Risoluzione</h4>
+                        <div class="math-expression">
+                            \[3x - 5x = 20 + 2\]
+                        </div>
+                        <div class="math-expression">
+                            \[-2x = 22\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = -11\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE</h4>
+                        <p>\(x = -11\) rispetta la C.E. (\(-11 \neq -4\)), quindi è <strong>accettabile</strong>.</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">Soluzione: \(x = -11\)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 6 -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 6</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🤖 AI-Calc</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔋 Batterie Ausiliarie</strong>
+                Le batterie di backup necessitano di una calibrazione base.
+            </div>
+            <div class="math-expression">
+                \[\frac{1}{3x-9} = 0\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(6)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-6">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[3x - 9 \neq 0 \quad \Rightarrow \quad x \neq 3\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔍 Analisi</h4>
+                        <p>Una frazione è zero solo se il numeratore è zero. Il numeratore è 1, che non può mai essere zero.</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE FINALE</h4>
+                        <p style="font-size: 1.2em; font-weight: bold;">L'equazione è IMPOSSIBILE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 7 -->
+        <div class="exercise-card" data-difficulty="medium" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 7</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🧪 Laboratorio Chimico</strong>
+                Dr. Delta deve calibrare i reagenti nel laboratorio. L'equazione è più complessa.
+            </div>
+            <div class="math-expression">
+                \[\frac{x^2-2x+1}{x-3} = 0\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento:</strong> Nota che \(x^2-2x+1\) è un quadrato perfetto!
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(7)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-7">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione del numeratore</h4>
+                        <div class="math-expression">
+                            \[x^2 - 2x + 1 = (x-1)^2\]
+                        </div>
+                        <p>L'equazione diventa:</p>
+                        <div class="math-expression">
+                            \[\frac{(x-1)^2}{x-3} = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x - 3 \neq 0 \quad \Rightarrow \quad x \neq 3\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Risoluzione</h4>
+                        <p>Il numeratore deve essere zero:</p>
+                        <div class="math-expression">
+                            \[(x-1)^2 = 0 \quad \Rightarrow \quad x - 1 = 0 \quad \Rightarrow \quad x = 1\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE</h4>
+                        <p>\(x = 1\) rispetta la C.E. (\(1 \neq 3\)), quindi è <strong>accettabile</strong>.</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">Soluzione: \(x = 1\)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 8 (Problema 509) -->
+        <div class="exercise-card" data-difficulty="medium" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 8</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📝 Problema</span>
+                    <span class="character-badge">🎖️ Commander Sigma</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔢 Enigma dei Numeri Reciproci</strong>
+                Commander Sigma ti sfida con un enigma matematico: trova due numeri speciali!
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> Trova, se esiste, il numero naturale pari il cui reciproco è uguale al doppio 
+                del reciproco del numero pari successivo.
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(8)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-8">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione del problema</h4>
+                        <p>Chiamiamo \(n\) il numero naturale pari che cerchiamo.</p>
+                        <p>Il numero pari successivo è \(n + 2\).</p>
+                        <p style="margin-top: 15px;">Traduciamo in equazione:</p>
+                        <div class="math-expression">
+                            \[\frac{1}{n} = 2 \cdot \frac{1}{n+2}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[n \neq 0 \land n + 2 \neq 0 \quad \Rightarrow \quad n \neq 0 \land n \neq -2\]
+                        </div>
+                        <p style="margin-top: 10px;">Ma \(n\) è un numero naturale pari, quindi \(n > 0\).</p>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🔧 Risoluzione</h4>
+                        <div class="math-expression">
+                            \[\frac{1}{n} = \frac{2}{n+2}\]
+                        </div>
+                        <p>Moltiplichiamo in croce:</p>
+                        <div class="math-expression">
+                            \[n + 2 = 2n\]
+                        </div>
+                        <div class="math-expression">
+                            \[2 = 2n - n\]
+                        </div>
+                        <div class="math-expression">
+                            \[n = 2\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E RISPOSTA</h4>
+                        <p>\(n = 2\) è un numero naturale pari ✓</p>
+                        <p style="margin-top: 10px;">Verifica: \(\frac{1}{2} = 2 \cdot \frac{1}{4} = \frac{2}{4} = \frac{1}{2}\) ✓</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">
+                            Il numero cercato è <strong>2</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 9 (Problema 510) -->
+        <div class="exercise-card" data-difficulty="hard" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 9</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📝 Problema</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🧮 La Proporzione Misteriosa</strong>
+                Dr. Delta ha scoperto una proporzione matematica interessante. Aiutala a trovare i numeri!
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> Il rapporto tra il doppio di un numero intero e la somma del numero e il suo successivo 
+                è \(\frac{2}{3}\). Trova il numero.
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(9)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-9">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione</h4>
+                        <p>Chiamiamo \(n\) il numero intero. Il successivo è \(n+1\).</p>
+                        <p style="margin-top: 15px;">L'equazione è:</p>
+                        <div class="math-expression">
+                            \[\frac{2n}{n + (n+1)} = \frac{2}{3}\]
+                        </div>
+                        <div class="math-expression">
+                            \[\frac{2n}{2n+1} = \frac{2}{3}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[2n + 1 \neq 0 \quad \Rightarrow \quad n \neq -\frac{1}{2}\]
+                        </div>
+                        <p>Ma \(n\) è intero, quindi questa condizione è sempre verificata.</p>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🔧 Risoluzione (moltiplicazione in croce)</h4>
+                        <div class="math-expression">
+                            \[3 \cdot 2n = 2 \cdot (2n+1)\]
+                        </div>
+                        <div class="math-expression">
+                            \[6n = 4n + 2\]
+                        </div>
+                        <div class="math-expression">
+                            \[2n = 2\]
+                        </div>
+                        <div class="math-expression">
+                            \[n = 1\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ RISPOSTA</h4>
+                        <p style="font-size: 1.3em; font-weight: bold;">Il numero cercato è <strong>1</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 10 (Problema 511) -->
+        <div class="exercise-card" data-difficulty="hard" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 10</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📝 Problema</span>
+                    <span class="character-badge">⚙️ Engineer Beta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>📐 La Frazione Perfetta</strong>
+                Engineer Beta sta cercando una frazione particolare. Riesci ad aiutarlo?
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> In una frazione a termini positivi il triplo del denominatore supera di 19 il doppio 
+                del numeratore. Trova la frazione, sapendo che, se si diminuisce di 3 il numeratore e aumenta di 3 il denominatore, 
+                si ottiene la frazione \(\frac{5}{9}\).
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(10)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-10">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione Sistema</h4>
+                        <p>Chiamiamo \(n\) il numeratore e \(d\) il denominatore.</p>
+                        <p style="margin-top: 15px;"><strong>Prima condizione:</strong> "Il triplo del denominatore supera di 19 il doppio del numeratore"</p>
+                        <div class="math-expression">
+                            \[3d = 2n + 19\]
+                        </div>
+                        <p style="margin-top: 15px;"><strong>Seconda condizione:</strong> Diminuendo 3 al numeratore e aumentando 3 al denominatore si ottiene \(\frac{5}{9}\)</p>
+                        <div class="math-expression">
+                            \[\frac{n-3}{d+3} = \frac{5}{9}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Dalla seconda equazione</h4>
+                        <p>Moltiplicando in croce:</p>
+                        <div class="math-expression">
+                            \[9(n-3) = 5(d+3)\]
+                        </div>
+                        <div class="math-expression">
+                            \[9n - 27 = 5d + 15\]
+                        </div>
+                        <div class="math-expression">
+                            \[9n = 5d + 42\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Risoluzione del sistema</h4>
+                        <p>Dalla prima equazione: \(3d = 2n + 19\), quindi \(d = \frac{2n+19}{3}\)</p>
+                        <p style="margin-top: 15px;">Sostituiamo nella seconda:</p>
+                        <div class="math-expression">
+                            \[9n = 5 \cdot \frac{2n+19}{3} + 42\]
+                        </div>
+                        <div class="math-expression">
+                            \[27n = 5(2n+19) + 126\]
+                        </div>
+                        <div class="math-expression">
+                            \[27n = 10n + 95 + 126\]
+                        </div>
+                        <div class="math-expression">
+                            \[17n = 221\]
+                        </div>
+                        <div class="math-expression">
+                            \[n = 13\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">4</span>
+                        <h4>🔍 Calcolo del denominatore</h4>
+                        <div class="math-expression">
+                            \[d = \frac{2 \cdot 13 + 19}{3} = \frac{26 + 19}{3} = \frac{45}{3} = 15\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE FINALE</h4>
+                        <p>Verifichiamo: \(\frac{13-3}{15+3} = \frac{10}{18} = \frac{5}{9}\) ✓</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">
+                            La frazione cercata è: \(\displaystyle\frac{13}{15}\)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 11 -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 11</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🤖 AI-Calc</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🌐 Connessione Satellitare</strong>
+                Il satellite di comunicazione necessita di un parametro specifico per mantenere l'orbita.
+            </div>
+            <div class="math-expression">
+                \[\frac{12}{12-x} = 0\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(11)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-11">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[12 - x \neq 0 \quad \Rightarrow \quad x \neq 12\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔍 Analisi</h4>
+                        <p>Il numeratore è 12, che non può mai essere zero.</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE</h4>
+                        <p style="font-size: 1.2em; font-weight: bold;">IMPOSSIBILE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 12 -->
+        <div class="exercise-card" data-difficulty="medium" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 12</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>⚗️ Reattore Secondario</strong>
+                Il reattore necessita di una calibrazione precisa per evitare surriscaldamenti.
+            </div>
+            <div class="math-expression">
+                \[\frac{x^2-4}{2-x} = 0\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento:</strong> \(x^2-4\) è una differenza di quadrati!
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(12)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-12">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione</h4>
+                        <div class="math-expression">
+                            \[x^2 - 4 = (x-2)(x+2)\]
+                        </div>
+                        <p>Inoltre, \(2-x = -(x-2)\)</p>
+                        <div class="math-expression">
+                            \[\frac{(x-2)(x+2)}{-(x-2)} = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[x - 2 \neq 0 \quad \Rightarrow \quad x \neq 2\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>✂️ Semplificazione</h4>
+                        <p>Possiamo semplificare \((x-2)\):</p>
+                        <div class="math-expression">
+                            \[\frac{x+2}{-1} = 0 \quad \Rightarrow \quad -(x+2) = 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[x + 2 = 0 \quad \Rightarrow \quad x = -2\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE</h4>
+                        <p>\(x = -2\) rispetta la C.E. (\(-2 \neq 2\)).</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">Soluzione: \(x = -2\)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 13 -->
+        <div class="exercise-card" data-difficulty="hard" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 13</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🎖️ Commander Sigma</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔋 Sistema Energetico Critico</strong>
+                Commander Sigma ti assegna una calibrazione complessa del sistema energetico della stazione.
+            </div>
+            <div class="math-expression">
+                \[\frac{x+2}{x-1} - \frac{2x}{x^2-1} = 1 + \frac{3}{x-1}\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento di AI-Calc:</strong> Nota che \(x^2-1 = (x-1)(x+1)\) è una differenza di quadrati!
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(13)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-13">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione del denominatore</h4>
+                        <div class="math-expression">
+                            \[x^2 - 1 = (x-1)(x+1)\]
+                        </div>
+                        <p>L'equazione diventa:</p>
+                        <div class="math-expression">
+                            \[\frac{x+2}{x-1} - \frac{2x}{(x-1)(x+1)} = 1 + \frac{3}{x-1}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x - 1 \neq 0 \land x + 1 \neq 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[x \neq 1 \land x \neq -1\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🔧 Calcolo m.c.m. e riduzione</h4>
+                        <p>Il m.c.m. dei denominatori è: \((x-1)(x+1)\)</p>
+                        <p style="margin-top: 15px;">Moltiplichiamo tutti i termini per \((x-1)(x+1)\):</p>
+                        <div class="math-expression">
+                            \[(x+2)(x+1) - 2x = (x-1)(x+1) + 3(x+1)\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">4</span>
+                        <h4>📐 Sviluppo dei prodotti notevoli</h4>
+                        <p><strong>Primo membro:</strong></p>
+                        <div class="math-expression">
+                            \[(x+2)(x+1) - 2x = x^2 + x + 2x + 2 - 2x = x^2 + x + 2\]
+                        </div>
+                        
+                        <p style="margin-top: 15px;"><strong>Secondo membro:</strong></p>
+                        <div class="math-expression">
+                            \[(x-1)(x+1) + 3(x+1) = x^2 - 1 + 3x + 3 = x^2 + 3x + 2\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">5</span>
+                        <h4>🎯 Equazione intera e risoluzione</h4>
+                        <div class="math-expression">
+                            \[x^2 + x + 2 = x^2 + 3x + 2\]
+                        </div>
+                        <p>Sottraiamo \(x^2\) e \(2\) da entrambi i membri:</p>
+                        <div class="math-expression">
+                            \[x = 3x\]
+                        </div>
+                        <div class="math-expression">
+                            \[0 = 2x\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE FINALE</h4>
+                        <p>\(x = 0\) rispetta le C.E. (\(0 \neq 1\) e \(0 \neq -1\)), quindi è <strong>accettabile</strong>.</p>
+                        <p style="margin-top: 15px;"><strong>Verifica:</strong></p>
+                        <div class="math-expression">
+                            \[\frac{0+2}{0-1} - \frac{2(0)}{0^2-1} = \frac{2}{-1} - 0 = -2\]
+                        </div>
+                        <div class="math-expression">
+                            \[1 + \frac{3}{0-1} = 1 + \frac{3}{-1} = 1 - 3 = -2\]
+                        </div>
+                        <p style="margin-top: 15px;">✓ L'uguaglianza è verificata!</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px; color: #6ee7b7;">
+                            Soluzione: \(x = 0\)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 14 (Dal libro 431) -->
+        <div class="exercise-card" data-difficulty="medium" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 14</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">⚙️ Engineer Beta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔩 Valvola Pressione Complessa</strong>
+                Una valvola critica richiede un calcolo più elaborato per la sincronizzazione.
+            </div>
+            <div class="math-expression">
+                \[\frac{3x+2}{x} - \frac{4x}{3x-1} + \frac{5x^2-2}{3x^2-x} = 0\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento:</strong> Scomponi \(3x^2-x = x(3x-1)\)
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(14)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-14">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione</h4>
+                        <div class="math-expression">
+                            \[3x^2 - x = x(3x-1)\]
+                        </div>
+                        <p>L'equazione diventa:</p>
+                        <div class="math-expression">
+                            \[\frac{3x+2}{x} - \frac{4x}{3x-1} + \frac{5x^2-2}{x(3x-1)} = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[x \neq 0 \land 3x-1 \neq 0 \quad \Rightarrow \quad x \neq 0 \land x \neq \frac{1}{3}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🔧 m.c.m. = x(3x-1)</h4>
+                        <div class="math-expression">
+                            \[\frac{(3x+2)(3x-1) - 4x \cdot x + (5x^2-2)}{x(3x-1)} = 0\]
+                        </div>
+                        <p>Sviluppiamo il numeratore:</p>
+                        <div class="math-expression">
+                            \[9x^2 - 3x + 6x - 2 - 4x^2 + 5x^2 - 2 = 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[10x^2 + 3x - 4 = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">4</span>
+                        <h4>📐 Formula risolutiva</h4>
+                        <div class="math-expression">
+                            \[x = \frac{-3 \pm \sqrt{9 + 160}}{20} = \frac{-3 \pm \sqrt{169}}{20} = \frac{-3 \pm 13}{20}\]
+                        </div>
+                        <div class="math-expression">
+                            \[x_1 = \frac{10}{20} = \frac{1}{2} \quad , \quad x_2 = \frac{-16}{20} = -\frac{4}{5}\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONI</h4>
+                        <p>Entrambe le soluzioni rispettano le C.E.</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">
+                            Soluzioni: \(x_1 = \frac{1}{2}\) , \(x_2 = -\frac{4}{5}\)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 15 (Dal libro 439) -->
+        <div class="exercise-card" data-difficulty="easy" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 15</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge easy">⭐ Facile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🤖 AI-Calc</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>💻 Sistema Operativo Core</strong>
+                Il sistema operativo della stazione richiede una verifica base dei parametri.
+            </div>
+            <div class="math-expression">
+                \[5x + 100 = \frac{10000}{100-5x}\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(15)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-15">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[100 - 5x \neq 0 \quad \Rightarrow \quad x \neq 20\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Moltiplicazione per (100-5x)</h4>
+                        <div class="math-expression">
+                            \[(5x+100)(100-5x) = 10000\]
+                        </div>
+                        <div class="math-expression">
+                            \[500x - 25x^2 + 10000 - 500x = 10000\]
+                        </div>
+                        <div class="math-expression">
+                            \[-25x^2 = 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE</h4>
+                        <p>\(x = 0\) rispetta la C.E. (\(0 \neq 20\)).</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">Soluzione: \(x = 0\)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 16 (Problema 514) -->
+        <div class="exercise-card" data-difficulty="medium" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 16</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📝 Problema</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🔢 Enigma della Semisomma</strong>
+                Dr. Delta ha scoperto una relazione interessante tra due numeri. Aiutala a trovarli!
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> La differenza fra due numeri naturali è 49 e il rapporto fra la loro semisomma 
+                e il minore dei due è uguale a \(\frac{81}{32}\). Quali sono i due numeri?
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(16)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-16">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione</h4>
+                        <p>Chiamiamo \(x\) il numero minore e \(y\) il numero maggiore.</p>
+                        <p style="margin-top: 15px;">Prima condizione:</p>
+                        <div class="math-expression">
+                            \[y - x = 49\]
+                        </div>
+                        <p style="margin-top: 15px;">Seconda condizione (la semisomma è \(\frac{x+y}{2}\)):</p>
+                        <div class="math-expression">
+                            \[\frac{\frac{x+y}{2}}{x} = \frac{81}{32}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Semplificazione seconda equazione</h4>
+                        <div class="math-expression">
+                            \[\frac{x+y}{2x} = \frac{81}{32}\]
+                        </div>
+                        <p>Moltiplicando in croce:</p>
+                        <div class="math-expression">
+                            \[32(x+y) = 162x\]
+                        </div>
+                        <div class="math-expression">
+                            \[32x + 32y = 162x\]
+                        </div>
+                        <div class="math-expression">
+                            \[32y = 130x\]
+                        </div>
+                        <div class="math-expression">
+                            \[y = \frac{130x}{32} = \frac{65x}{16}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Sostituzione</h4>
+                        <p>Dalla prima equazione: \(y = x + 49\)</p>
+                        <p style="margin-top: 15px;">Uguagliamo le due espressioni di \(y\):</p>
+                        <div class="math-expression">
+                            \[x + 49 = \frac{65x}{16}\]
+                        </div>
+                        <div class="math-expression">
+                            \[16(x + 49) = 65x\]
+                        </div>
+                        <div class="math-expression">
+                            \[16x + 784 = 65x\]
+                        </div>
+                        <div class="math-expression">
+                            \[784 = 49x\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = 16\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">4</span>
+                        <h4>🎯 Calcolo del secondo numero</h4>
+                        <div class="math-expression">
+                            \[y = x + 49 = 16 + 49 = 65\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E RISPOSTA</h4>
+                        <p>Verifica: \(y - x = 65 - 16 = 49\) ✓</p>
+                        <p>Verifica: \(\frac{\frac{16+65}{2}}{16} = \frac{\frac{81}{2}}{16} = \frac{81}{32}\) ✓</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">
+                            I due numeri sono: <strong>16</strong> e <strong>65</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 17 (Dal libro 432) -->
+        <div class="exercise-card" data-difficulty="hard" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 17</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📐 Equazione</span>
+                    <span class="character-badge">🎖️ Commander Sigma</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>⚙️ Reattore Principale</strong>
+                Commander Sigma ti assegna la missione più critica: il reattore principale necessita di una calibrazione estrema!
+            </div>
+            <div class="math-expression">
+                \[\frac{3x-2}{x+4} = 5\]
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(17)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-17">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📋 C.E.</h4>
+                        <div class="math-expression">
+                            \[x + 4 \neq 0 \quad \Rightarrow \quad x \neq -4\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Risoluzione</h4>
+                        <div class="math-expression">
+                            \[3x - 2 = 5(x+4)\]
+                        </div>
+                        <div class="math-expression">
+                            \[3x - 2 = 5x + 20\]
+                        </div>
+                        <div class="math-expression">
+                            \[-2x = 22\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = -11\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ SOLUZIONE</h4>
+                        <p>\(x = -11\) rispetta la C.E.</p>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">Soluzione: \(x = -11\)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 18 (Problema 526) -->
+        <div class="exercise-card" data-difficulty="hard" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 18</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📝 Problema con Età</span>
+                    <span class="character-badge">⚙️ Engineer Beta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>👥 Enigma delle Sorelle</strong>
+                Engineer Beta ti propone un problema sulle età. Marta e Lucia sono sorelle astronaute!
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> Marta ha 3 anni in meno di sua sorella Lucia. Il rapporto tra le loro età è \(\frac{5}{6}\). 
+                Quanti anni hanno le due sorelle?
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(18)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-18">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione</h4>
+                        <p>Chiamiamo \(x\) l'età di Lucia (la maggiore).</p>
+                        <p>Allora Marta ha \(x - 3\) anni.</p>
+                        <p style="margin-top: 15px;">Il rapporto delle età:</p>
+                        <div class="math-expression">
+                            \[\frac{x-3}{x} = \frac{5}{6}\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Moltiplicazione in croce</h4>
+                        <div class="math-expression">
+                            \[6(x-3) = 5x\]
+                        </div>
+                        <div class="math-expression">
+                            \[6x - 18 = 5x\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = 18\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ RISPOSTA</h4>
+                        <p style="font-size: 1.3em; font-weight: bold;">
+                            Lucia ha <strong>18 anni</strong><br>
+                            Marta ha <strong>15 anni</strong>
+                        </p>
+                        <p style="margin-top: 15px;">Verifica: \(\frac{15}{18} = \frac{5}{6}\) ✓</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 19 (Problema scarpe corretto) -->
+        <div class="exercise-card" data-difficulty="medium" data-type="problem">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 19</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge medium">⭐⭐ Media</span>
+                    <span class="type-badge">📝 Problema Applicativo</span>
+                    <span class="character-badge">🔬 Dr. Delta</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>👟 Produzione Scarpe Spaziali</strong>
+                Dr. Delta deve calcolare la produzione ottimale di scarpe speciali per camminare sulla superficie di Algebrion!
+            </div>
+            <p style="margin: 20px 0; font-size: 1.1em; line-height: 1.8;">
+                <strong>Problema:</strong> Il costo, in euro, per produrre un paio di scarpe dipende dal numero \(x\) di paia 
+                prodotte secondo la funzione: \(p(x) = \frac{15x+230}{x}\). In seguito all'acquisto di nuovi macchinari, 
+                il costo unitario diminuisce di \(\frac{1}{x}\); cresce però di \(\frac{3x+2}{x}\) a causa dell'aumento dei costi 
+                dei materiali. Se il costo unitario adesso è di € 19, quante paia di scarpe sono state prodotte?
+            </p>
+            <button class="solution-toggle" onclick="toggleSolution(19)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata
+            </button>
+            <div class="solution-content" id="solution-19">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>📝 Impostazione dell'equazione</h4>
+                        <p>Costo iniziale: \(p(x) = \frac{15x+230}{x}\)</p>
+                        <p style="margin-top: 15px;"><strong>Diminuzione</strong> per nuovi macchinari: \(-\frac{1}{x}\)</p>
+                        <p><strong>Aumento</strong> per costi materiali: \(+\frac{3x+2}{x}\)</p>
+                        <p style="margin-top: 15px;">Il nuovo costo unitario è:</p>
+                        <div class="math-expression">
+                            \[\frac{15x+230}{x} - \frac{1}{x} + \frac{3x+2}{x} = 19\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>🔧 Semplificazione</h4>
+                        <p>Tutti i termini hanno lo stesso denominatore \(x\), quindi sommiamo i numeratori:</p>
+                        <div class="math-expression">
+                            \[\frac{15x + 230 - 1 + 3x + 2}{x} = 19\]
+                        </div>
+                        <div class="math-expression">
+                            \[\frac{18x + 231}{x} = 19\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>📐 Risoluzione</h4>
+                        <p>Moltiplichiamo entrambi i membri per \(x\):</p>
+                        <div class="math-expression">
+                            \[18x + 231 = 19x\]
+                        </div>
+                        <div class="math-expression">
+                            \[231 = 19x - 18x\]
+                        </div>
+                        <div class="math-expression">
+                            \[231 = x\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E RISPOSTA</h4>
+                        <p>Verifichiamo sostituendo \(x = 231\):</p>
+                        <div class="math-expression">
+                            \[\frac{15(231) + 230 - 1 + 3(231) + 2}{231} = \frac{3465 + 230 - 1 + 693 + 2}{231} = \frac{4389}{231} = 19\]
+                        </div>
+                        <p style="font-size: 1.3em; font-weight: bold; margin-top: 15px;">
+                            Sono state prodotte <strong>231 paia</strong> di scarpe
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESERCIZIO 20 (Dal libro 437) -->
+        <div class="exercise-card" data-difficulty="hard" data-type="equation">
+            <div class="exercise-header">
+                <span class="exercise-number">MISSIONE 20</span>
+                <div class="badge-container">
+                    <span class="difficulty-badge hard">⭐⭐⭐ Difficile</span>
+                    <span class="type-badge">📐 Equazione BOSS</span>
+                    <span class="character-badge">🎖️ Commander Sigma</span>
+                </div>
+            </div>
+            <div class="exercise-context">
+                <strong>🚀 MISSIONE FINALE - SALVA LA STAZIONE!</strong>
+                Questa è l'ultima equazione! Se la risolvi correttamente, la stazione Math-ISS sarà completamente operativa 
+                e potrà atterrare su Algebrion!
+            </div>
+            <div class="math-expression">
+                \[\frac{9x-2}{3x-3} + \frac{x+2}{1-x} = 0\]
+            </div>
+            <div class="hint-box">
+                <strong>💡 Suggerimento Finale di AI-Calc:</strong> Scomponi \(3x-3 = 3(x-1)\) e nota che \(1-x = -(x-1)\)!
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(20)">
+                <span class="rocket">🚀</span> Visualizza Soluzione Guidata FINALE
+            </button>
+            <div class="solution-content" id="solution-20">
+                <div class="solution-box">
+                    <div class="solution-step">
+                        <span class="step-number">1</span>
+                        <h4>🔧 Scomposizione Denominatori</h4>
+                        <div class="math-expression">
+                            \[3x - 3 = 3(x-1)\]
+                        </div>
+                        <div class="math-expression">
+                            \[1 - x = -(x-1)\]
+                        </div>
+                        <p>L'equazione diventa:</p>
+                        <div class="math-expression">
+                            \[\frac{9x-2}{3(x-1)} + \frac{x+2}{-(x-1)} = 0\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">2</span>
+                        <h4>📋 Condizioni di Esistenza</h4>
+                        <div class="math-expression">
+                            \[x - 1 \neq 0 \quad \Rightarrow \quad x \neq 1\]
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <span class="step-number">3</span>
+                        <h4>🔧 Riduzione allo stesso denominatore</h4>
+                        <p>m.c.m. = \(3(x-1)\)</p>
+                        <div class="math-expression">
+                            \[\frac{9x-2 - 3(x+2)}{3(x-1)} = 0\]
+                        </div>
+                        <p>Il numeratore deve essere zero:</p>
+                        <div class="math-expression">
+                            \[9x - 2 - 3x - 6 = 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[6x - 8 = 0\]
+                        </div>
+                        <div class="math-expression">
+                            \[x = \frac{8}{6} = \frac{4}{3}\]
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ VERIFICA E SOLUZIONE FINALE</h4>
+                        <p>\(x = \frac{4}{3}\) rispetta la C.E. (\(\frac{4}{3} \neq 1\)).</p>
+                        <p style="font-size: 1.5em; font-weight: bold; margin-top: 20px; color: #fbbf24;">
+                            🎉 MISSIONE COMPLETATA! 🎉
+                        </p>
+                        <p style="font-size: 1.3em; margin-top: 15px;">
+                            Soluzione: \(x = \frac{4}{3}\)
+                        </p>
+                        <p style="margin-top: 20px; font-size: 1.1em; line-height: 1.8;">
+                            <strong>Commander Sigma:</strong> "Eccellente lavoro, astronauta! La stazione Math-ISS è ora completamente 
+                            operativa. Algebrion ci attende!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 60px; padding: 40px; background: rgba(30, 41, 59, 0.8); border-radius: 15px; border: 2px solid #3b82f6;">
+            <h2 style="color: #fbbf24; font-size: 2em; margin-bottom: 20px;">🎓 ADDESTRAMENTO COMPLETATO</h2>
+            <p style="font-size: 1.2em; margin-bottom: 15px;">
+                Congratulazioni, astronauta! Hai completato tutte le 20 missioni del Training Center Math-ISS.
+            </p>
+            <p style="font-size: 1em; color: #94a3b8; margin-top: 30px;">
+                <em>Documento classificato - Stazione Math-ISS</em><br>
+                <em>Dipartimento Addestramento Avanzato</em><br>
+                <em>Anno Stellare 2157</em>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Genera stelle animate
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Toggle soluzione
+        function toggleSolution(num) {
+            const solution = document.getElementById('solution-' + num);
+            const button = solution.previousElementSibling;
+            
+            if (solution.classList.contains('visible')) {
+                solution.classList.remove('visible');
+                button.innerHTML = '<span class="rocket">🚀</span> Visualizza Soluzione Guidata';
+            } else {
+                solution.classList.add('visible');
+                button.innerHTML = '<span class="rocket">🔽</span> Nascondi Soluzione';
+                
+                // Marca come completato
+                const card = solution.closest('.exercise-card');
+                if (!card.classList.contains('completed')) {
+                    card.classList.add('completed');
+                    updateProgress();
+                    createParticles(button);
+                }
+                
+                // Re-render MathJax
+                if (window.MathJax) {
+                    MathJax.typesetPromise([solution]).catch((err) => console.log(err));
+                }
+                
+                // Scroll smooth
+                setTimeout(() => {
+                    solution.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        // Filtro esercizi
+        function filterExercises(category) {
+            const cards = document.querySelectorAll('.exercise-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Aggiorna stato pulsanti
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filtra cards
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else if (category === 'easy' || category === 'medium' || category === 'hard') {
+                    if (card.dataset.difficulty === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (category === 'equation' || category === 'problem') {
+                    if (card.dataset.type === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Aggiorna progresso
+        function updateProgress() {
+            const total = document.querySelectorAll('.exercise-card').length;
+            const completed = document.querySelectorAll('.exercise-card.completed').length;
+            const remaining = total - completed;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('completedExercises').textContent = completed;
+            document.getElementById('remainingExercises').textContent = remaining;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% Completato';
+        }
+
+        // Crea particelle celebrative
+        function createParticles(button) {
+            const rect = button.getBoundingClientRect();
+            const colors = ['#fbbf24', '#60a5fa', '#34d399', '#a78bfa', '#ec4899'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = rect.left + rect.width / 2 + 'px';
+                particle.style.top = rect.top + rect.height / 2 + 'px';
+                particle.style.width = Math.random() * 8 + 4 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animation = `floatUp ${Math.random() * 2 + 2}s ease-out`;
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 4000);
+            }
+        }
+
+        // Inizializza
+        window.addEventListener('load', () => {
+            createStars();
+            updateProgress();
+            
+            // Re-render MathJax dopo il caricamento
+            if (window.MathJax) {
+                MathJax.typesetPromise().catch((err) => console.log(err));
+            }
+        });
+    </script>
+</body>
+</html>
